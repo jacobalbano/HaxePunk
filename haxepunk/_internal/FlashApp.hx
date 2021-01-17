@@ -93,7 +93,7 @@ class FlashApp extends Sprite
 			Log.debug("touch events not supported");
 		}
 
-		engine.checkScene();
+		engine.checkWorld();
 
 		// game start
 		engine.init();

@@ -138,7 +138,7 @@ class EntityList<T:Entity> extends Entity
 
 	/**
 	 * Returns a new Entity, or a stored recycled Entity if one exists.
-	 * @param	addToScene			Add it to the World immediately.
+	 * @param	addToWorld			Add it to the World immediately.
 	 * @param	constructorArgs		List of the entity constructor arguments (optional).
 	 * @return	The new Entity object.
 	 */

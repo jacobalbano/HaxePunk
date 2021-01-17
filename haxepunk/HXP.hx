@@ -172,7 +172,7 @@ class HXP
 	/**
 	 * If we're currently rendering, this is the World being rendered now.
 	 */
-	public static var renderingScene:World;
+	public static var renderingWorld:World;
 
 	/**
 	 * Resize the screen.

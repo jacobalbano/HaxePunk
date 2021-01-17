@@ -3,21 +3,21 @@ package haxepunk.pixel;
 import haxepunk.Entity;
 import haxepunk.HXP;
 import haxepunk.Graphic;
-import haxepunk.graphics.shader.SceneShader;
+import haxepunk.graphics.shader.WorldShader;
 
 class PixelArtScaler extends Entity
 {
 	public static var baseWidth:Null<Int> = null;
 	public static var baseHeight:Null<Int> = null;
 
-	static var s1:SceneShader;
-	static var s2:SceneShader;
+	static var s1:WorldShader;
+	static var s2:WorldShader;
 
 	public static function globalActivate()
 	{
 		Graphic.smoothDefault = false;
 		Graphic.pixelSnappingDefault = true;
-		HXP.engine.onSceneSwitch.bind(activate);
+		HXP.engine.onWorldSwitch.bind(activate);
 	}
 
 	public static function activate()
@@ -63,11 +63,11 @@ class PixelArtScaler extends Entity
 	override public function added()
 	{
 		if (world.shaders == null) world.shaders = new Array();
-		if (s1 == null) s1 = new SceneShader();
+		if (s1 == null) s1 = new WorldShader();
 		s1.width = baseWidth == null ? HXP.width : baseWidth;
 		s1.height = baseHeight == null ? HXP.height : baseHeight;
 		s1.smooth = false;
-		if (s2 == null) s2 = new SceneShader();
+		if (s2 == null) s2 = new WorldShader();
 		resized();
 
 		if (world.shaders.indexOf(s1) == -1) world.shaders.push(s1);

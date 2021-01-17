@@ -387,11 +387,11 @@ class DrawContext
 	}
 
 	/** @private Helper function to grab a DrawCommand object from the current world */
-	@:access(haxepunk.graphics.hardware.SceneRenderer)
+	@:access(haxepunk.graphics.hardware.WorldRenderer)
 	inline function begin()
 	{
 		if (shader == null) shader = new ColorShader();
-		var world = (this.world == null) ? (HXP.renderingScene == null ? HXP.world : HXP.renderingScene) : this.world;
+		var world = (this.world == null) ? (HXP.renderingWorld == null ? HXP.world : HXP.renderingWorld) : this.world;
 		command = world.batch.getDrawCommand(null, shader, smooth, blend, null);
 	}
 

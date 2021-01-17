@@ -5,7 +5,7 @@ import lime.graphics.opengl.GLFramebuffer;
 import haxepunk.graphics.hardware.opengl.GLUtils;
 import haxepunk.graphics.hardware.Float32Array;
 import haxepunk.HXP;
-import haxepunk.graphics.shader.SceneShader;
+import haxepunk.graphics.shader.WorldShader;
 import haxepunk.utils.BlendMode;
 
 /**
@@ -170,7 +170,7 @@ class HardwareRenderer
 	}
 
 	@:access(haxepunk.Screen)
-	public function startScene(world:World)
+	public function startWorld(world:World)
 	{
 		GLUtils.checkForErrors();
 		_tracking = world.trackDrawCalls;
@@ -189,8 +189,8 @@ class HardwareRenderer
 		screenScaleX = screen.scaleX;
 		screenScaleY = screen.scaleY;
 
-		var postProcess:Array<SceneShader> = world.shaders;
-		var firstShader:SceneShader = null;
+		var postProcess:Array<WorldShader> = world.shaders;
+		var firstShader:WorldShader = null;
 		if (postProcess != null) for (p in postProcess)
 		{
 			if (p.active)
@@ -227,7 +227,7 @@ class HardwareRenderer
 	}
 
 	@:access(haxepunk.Screen)
-	public function flushScene(world:World)
+	public function flushWorld(world:World)
 	{
 		var screen = HXP.screen;
 		screen.width = screenWidth;
@@ -235,7 +235,7 @@ class HardwareRenderer
 		screen.scaleX = screenScaleX;
 		screen.scaleY = screenScaleY;
 
-		var postProcess:Array<SceneShader> = world.shaders;
+		var postProcess:Array<WorldShader> = world.shaders;
 		var hasPostProcess = false;
 		if (postProcess != null) for (p in postProcess)
 		{

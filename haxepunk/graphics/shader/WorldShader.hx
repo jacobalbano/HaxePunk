@@ -10,7 +10,7 @@ import haxepunk.graphics.hardware.Float32Array;
 /**
  * Used to create a custom shader.
  */
-class SceneShader extends Shader
+class WorldShader extends Shader
 {
 	static inline var DEFAULT_VERTEX_SHADER:String = "
 #ifdef GL_ES
@@ -42,9 +42,9 @@ void main () {
 	/**
 	 * Create a custom shader from a text asset.
 	 */
-	public static inline function fromAsset(name:String):SceneShader
+	public static inline function fromAsset(name:String):WorldShader
 	{
-		return new SceneShader(AssetLoader.getText(name));
+		return new WorldShader(AssetLoader.getText(name));
 	}
 
 	public var active:Bool = true;

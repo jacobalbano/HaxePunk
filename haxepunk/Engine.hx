@@ -66,7 +66,7 @@ class Engine
 	/**
 	 * Invoked after the world is switched.
 	 */
-	public var onSceneSwitch:Signal0 = new Signal0();
+	public var onWorldSwitch:Signal0 = new Signal0();
 	/**
 	 * Invoked when the application is closed.
 	 */
@@ -102,7 +102,7 @@ class Engine
 
 		_frameList = new Array();
 
-		_iterator = new VisibleSceneIterator();
+		_iterator = new VisibleWorldIterator();
 
 		app.init();
 	}
@@ -177,16 +177,16 @@ class Engine
 		_renderer.startFrame();
 		for (world in _iterator.reset(this))
 		{
-			_renderer.startScene(world);
-			HXP.renderingScene = world;
+			_renderer.startWorld(world);
+			HXP.renderingWorld = world;
 			world.render();
 			for (commands in world.batch)
 			{
 				_renderer.render(commands);
 			}
-			_renderer.flushScene(world);
+			_renderer.flushWorld(world);
 		}
-		HXP.renderingScene = null;
+		HXP.renderingWorld = null;
 		_renderer.endFrame();
 
 		postRender.invoke();
@@ -263,7 +263,7 @@ class Engine
 
 			_world = _worlds[_worlds.length - 1];
 
-			onworldswitch.invoke();
+			onWorldSwitch.invoke();
 
 			Log.debug("starting world: " + Type.getClassName(Type.getClass(_world)));
 			_world.assetCache.enable();
@@ -280,10 +280,10 @@ class Engine
 	 * @param value  The world to push
 	 * @since	2.5.3
 	 */
-	public function pushScene(value:World):Void
+	public function pushWorld(value:World):Void
 	{
 		Log.debug("pushed world: " + Type.getClassName(Type.getClass(_world)));
-		_worlds.push(value);
+		worldX(value);
 	}
 
 	/**
@@ -347,10 +347,10 @@ class Engine
 
 	var _renderer:HardwareRenderer = new HardwareRenderer();
 
-	var _iterator:VisibleSceneIterator;
+	var _iterator:VisibleWorldIterator;
 }
 
-private class VisibleSceneIterator
+private class VisibleWorldIterator
 {
 	public function new() {}
 
@@ -365,7 +365,7 @@ private class VisibleSceneIterator
 	}
 
 	@:access(haxepunk.Engine)
-	public function reset(engine:Engine):VisibleSceneIterator
+	public function reset(engine:Engine):VisibleWorldIterator
 	{
 		HXP.clear(worlds);
 

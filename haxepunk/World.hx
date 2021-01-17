@@ -4,7 +4,7 @@ import haxe.ds.IntMap;
 import haxepunk.Signal;
 import haxepunk.assets.AssetCache;
 import haxepunk.graphics.atlas.AtlasData;
-import haxepunk.graphics.shader.SceneShader;
+import haxepunk.graphics.shader.WorldShader;
 import haxepunk.graphics.hardware.DrawCommandBatch;
 import haxepunk.graphics.hardware.Texture;
 import haxepunk.utils.BlendMode;
@@ -33,7 +33,7 @@ class World extends Tweener
 	public var bgColor:Null<Color> = null;
 
 	/**
-	 * Background opacity. If less than 1, Scenes behind this World in the stack
+	 * Background opacity. If less than 1, Worlds behind this World in the stack
 	 * will be rendered underneath.
 	 * @since	2.6.0
 	 */
@@ -82,7 +82,7 @@ class World extends Tweener
 	 *
 	 * @since	4.0.0
 	 */
-	public var shaders:Null<Array<SceneShader>>;
+	public var shaders:Null<Array<WorldShader>>;
 
 	/**
 	 * Invoked before this World's update cycle begins each frame.
@@ -253,7 +253,7 @@ class World extends Tweener
 	 */
 	public function render()
 	{
-		AtlasData.startScene(batch);
+		AtlasData.startWorld(batch);
 		batch.visibleArea.setTo(0, 0, width, height);
 
 		if (bgAlpha > 0)
@@ -395,11 +395,11 @@ class World extends Tweener
 	 * isn't called. Instead use a function to initialize your entities.
 	 *
 	 * @param	classType			The Class of the Entity you want to add.
-	 * @param	addToScene			Add it to the World immediately.
+	 * @param	addToWorld			Add it to the World immediately.
 	 * @param	constructorsArgs	List of the entity constructor arguments (optional).
 	 * @return	The new Entity object.
 	 */
-	public function create<E:Entity>(classType:Class<E>, addToScene:Bool = true, ?constructorsArgs:Array<Dynamic>):E
+	public function create<E:Entity>(classType:Class<E>, addToWorld:Bool = true, ?constructorsArgs:Array<Dynamic>):E
 	{
 		var className:String = Type.getClassName(classType);
 		var e:Entity = _recycled.get(className);
@@ -416,7 +416,7 @@ class World extends Tweener
 				e = Type.createInstance(classType, []);
 		}
 
-		return cast (addToScene ? add(e) : e);
+		return cast (addToWorld ? add(e) : e);
 	}
 
 	/**

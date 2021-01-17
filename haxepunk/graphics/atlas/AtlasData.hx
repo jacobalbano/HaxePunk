@@ -48,7 +48,7 @@ class AtlasData
 	 * @param	world	The world object to set
 	 */
 	@:allow(haxepunk.World)
-	static inline function startScene(batch:DrawCommandBatch):Void
+	static inline function startWorld(batch:DrawCommandBatch):Void
 	{
 		_batch = batch;
 		batch.recycle();
