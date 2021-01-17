@@ -4,7 +4,7 @@ import haxepunk.graphics.text.BitmapText;
 import haxepunk.input.MouseManager;
 import haxepunk.utils.Draw;
 
-@:access(haxepunk.Scene)
+@:access(haxepunk.World)
 private class LayerToggle extends Entity
 {
 	public var layerNumber:Null<Int>;
@@ -28,10 +28,10 @@ private class LayerToggle extends Entity
 		visible = collidable = layerNumber != null;
 		if (layerNumber != null)
 		{
-			var entityCount = HXP.scene._layers.exists(layerNumber) ? Lambda.count(HXP.scene._layers[layerNumber]) : 0;
+			var entityCount = HXP.world._layers.exists(layerNumber) ? Lambda.count(HXP.world._layers[layerNumber]) : 0;
 			var txt = "Layer " + layerNumber + " [" + entityCount + "]";
 			if (label.text != txt) label.text = txt;
-			label.color = HXP.scene.layerVisible(layerNumber) ? 0x00ff00 : 0xff0000;
+			label.color = HXP.world.layerVisible(layerNumber) ? 0x00ff00 : 0xff0000;
 		}
 	}
 
@@ -39,9 +39,9 @@ private class LayerToggle extends Entity
 	{
 		if (layerNumber != null)
 		{
-			var display = !HXP.scene.layerVisible(layerNumber);
-			HXP.scene.showLayer(layerNumber, display);
-			HXP.scene.updateLists();
+			var display = !HXP.world.layerVisible(layerNumber);
+			HXP.world.showLayer(layerNumber, display);
+			HXP.world.updateLists();
 		}
 	}
 
@@ -49,7 +49,7 @@ private class LayerToggle extends Entity
 	function onExit() label.alpha = 0.75;
 }
 
-@:access(haxepunk.Scene)
+@:access(haxepunk.World)
 class LayerList extends EntityList<LayerToggle>
 {
 	var alpha:Float = 0.5;
@@ -64,7 +64,7 @@ class LayerList extends EntityList<LayerToggle>
 		width = 240;
 		height = 320;
 
-		sceneLabel = new BitmapText("Scene", {size: 12});
+		sceneLabel = new BitmapText("World", {size: 12});
 		sceneLabel.x = 10;
 		sceneLabel.y = childY;
 		childY += sceneLabel.textHeight;
@@ -78,7 +78,7 @@ class LayerList extends EntityList<LayerToggle>
 	{
 		super.update();
 
-		var layerCount = HXP.scene._layerList.length;
+		var layerCount = HXP.world._layerList.length;
 		while (entities.length < layerCount)
 		{
 			var toggle = new LayerToggle(mouseManager);
@@ -89,11 +89,11 @@ class LayerList extends EntityList<LayerToggle>
 
 		for (i in 0 ... entities.length)
 		{
-			entities[i].layerNumber = i >= HXP.scene._layerList.length ? null : HXP.scene._layerList[i];
+			entities[i].layerNumber = i >= HXP.world._layerList.length ? null : HXP.world._layerList[i];
 			entities[i].update();
 		}
 
-		var txt = Type.getClassName(Type.getClass(HXP.scene));
+		var txt = Type.getClassName(Type.getClass(HXP.world));
 		if (sceneLabel.text != txt) sceneLabel.text = txt;
 	}
 

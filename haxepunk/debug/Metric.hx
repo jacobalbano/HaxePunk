@@ -51,7 +51,7 @@ class Metric<T:Float> extends Entity
 		var fsx:Float = camera.screenScaleX,
 			fsy:Float = camera.screenScaleY;
 
-		drawContext.scene = scene;
+		drawContext.world = world;
 		drawContext.setColor(color.lerp(0, 0.9), 0.8);
 		drawContext.rectFilled(x * fsx, y * fsy, width * fsx, height * fsy);
 

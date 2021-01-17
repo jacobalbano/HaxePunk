@@ -10,9 +10,9 @@ typedef MouseWheelCallback = Int -> Void;
  * Allow Entities to register callbacks on mouse interaction. Based on
  * FlxMouseEventManager by TiagoLr.
  *
- * To use a MouseManager, add it to the scene, then call the `add` method to add
+ * To use a MouseManager, add it to the world, then call the `add` method to add
  * Entities with mouse event callbacks. Multiple MouseManagers can be added to
- * the same scene. All entities within one MouseManager must be the same
+ * the same world. All entities within one MouseManager must be the same
  * collision type.
  */
 class MouseManager extends Entity
@@ -120,12 +120,12 @@ class MouseManager extends Entity
 		var collisions:Array<Entity> = _collisions;
 		// make sure the mouse is onscreen before checking for collisions
 		if (Mouse.mouseOnScreen &&
-			mouseX >= scene.x &&
-			mouseY >= scene.y &&
-			mouseX <= scene.x + scene.width &&
-			mouseY <= scene.y + scene.height)
+			mouseX >= world.x &&
+			mouseY >= world.y &&
+			mouseX <= world.x + world.width &&
+			mouseY <= world.y + world.height)
 		{
-			scene.collidePointInto(type, scene.mouseX, scene.mouseY, collisions, true);
+			world.collidePointInto(type, world.mouseX, world.mouseY, collisions, true);
 		}
 
 		var fallthrough:Bool = true;

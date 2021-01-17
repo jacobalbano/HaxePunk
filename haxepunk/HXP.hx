@@ -19,7 +19,7 @@ class HXP
 	 * The HaxePunk version.
 	 * Format: Major.Minor.Patch
 	 */
-	public static inline var VERSION:String = "4.0.1";
+	public static inline var VERSION:String = "4.1.1 LEAN AND MEAN";
 
 	/**
 	 * Width of the game.
@@ -86,10 +86,10 @@ class HXP
 	 * Point used to determine drawing offset in the render loop.
 	 */
 	public static var camera(get, never):Camera;
-	static inline function get_camera() return scene == null ? null : scene.camera;
+	static inline function get_camera() return world == null ? null : world.camera;
 
 	/**
-	 * Global tweener for tweening between multiple scenes
+	 * Global tweener for tweening between multiple worlds
 	 */
 	public static var tweener:Tweener = new Tweener();
 
@@ -162,17 +162,17 @@ class HXP
 	}
 
 	/**
-	 * The currently active Scene object. When you set this, the Scene is flagged
+	 * The currently active World object. When you set this, the World is flagged
 	 * to switch, but won't actually do so until the end of the current frame.
 	 */
-	public static var scene(get, set):Scene;
-	static inline function get_scene():Scene return engine.scene;
-	static inline function set_scene(value:Scene):Scene return engine.scene = value;
+	public static var world(get, set):World;
+	static inline function get_world():World return engine.world;
+	static inline function set_world(value:World):World return engine.world = value;
 
 	/**
-	 * If we're currently rendering, this is the Scene being rendered now.
+	 * If we're currently rendering, this is the World being rendered now.
 	 */
-	public static var renderingScene:Scene;
+	public static var renderingScene:World;
 
 	/**
 	 * Resize the screen.
@@ -181,7 +181,7 @@ class HXP
 	 */
 	public static function resize(width:Int, height:Int)
 	{
-		// resize scene to scale
+		// resize world to scale
 		HXP.windowWidth = width;
 		HXP.windowHeight = height;
 		HXP.screen.resize(width, height);
@@ -189,7 +189,7 @@ class HXP
 		HXP.halfHeight = HXP.height / 2;
 		HXP.bounds.width = width;
 		HXP.bounds.height = height;
-		for (scene in HXP.engine) scene._resize();
+		for (world in HXP.engine) world._resize();
 		HXP.needsResize = false;
 	}
 

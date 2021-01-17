@@ -13,6 +13,7 @@ log.txt
 tests/report
 .temp
 dump
+export
 
 TestMain.hx
 TestSuite.hx

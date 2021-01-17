@@ -23,8 +23,8 @@ class Cursor extends Entity
 	override public function update()
 	{
 		super.update();
-		x = scene.mouseX;
-		y = scene.mouseY;
+		x = world.mouseX;
+		y = world.mouseY;
 	}
 
 	override public function render(camera:Camera)

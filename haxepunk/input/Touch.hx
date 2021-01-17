@@ -88,13 +88,13 @@ class Touch
 	}
 
 	/**
-	 * The touch x-axis coord in the scene.
+	 * The touch x-axis coord in the world.
 	 */
 	public var sceneX(get, never):Float;
 	inline function get_sceneX():Float return x + HXP.camera.x;
 
 	/**
-	 * The touch y-axis coord in the scene.
+	 * The touch y-axis coord in the world.
 	 */
 	public var sceneY(get, never):Float;
 	inline function get_sceneY():Float return y + HXP.camera.y;

@@ -1,5 +1,6 @@
 package haxepunk;
 
+import openfl.Assets;
 import haxepunk.Signal;
 import haxepunk.debug.Console;
 import haxepunk.graphics.hardware.HardwareRenderer;
@@ -7,6 +8,7 @@ import haxepunk.input.Input;
 import haxepunk.math.Random;
 import haxepunk.math.Rectangle;
 import haxepunk.utils.Draw;
+import haxepunk.App;
 
 /**
  * Main game Sprite class, added to the Stage.
@@ -62,7 +64,7 @@ class Engine
 	 */
 	public var onInputReleased:Signals = new Signals();
 	/**
-	 * Invoked after the scene is switched.
+	 * Invoked after the world is switched.
 	 */
 	public var onSceneSwitch:Signal0 = new Signal0();
 	/**
@@ -129,7 +131,7 @@ class Engine
 	public function focusLost() {}
 
 	/**
-	 * Updates the game, updating the Scene and Entities.
+	 * Updates the game, updating the World and Entities.
 	 */
 	public function update()
 	{
@@ -138,26 +140,26 @@ class Engine
 			HXP.resize(HXP.windowWidth, HXP.windowHeight);
 		}
 
-		_scene.updateLists();
+		_world.updateLists();
 		checkScene();
 
 		preUpdate.invoke();
-		_scene.preUpdate.invoke();
+		_world.preUpdate.invoke();
 
 		if (HXP.tweener.active && HXP.tweener.hasTween) HXP.tweener.updateTweens(HXP.elapsed);
-		if (_scene.active)
+		if (_world.active)
 		{
-			if (_scene.hasTween) _scene.updateTweens(HXP.elapsed);
-			_scene.update();
+			if (_world.hasTween) _world.updateTweens(HXP.elapsed);
+			_world.update();
 		}
-		_scene.updateLists(false);
+		_world.updateLists(false);
 
-		_scene.postUpdate.invoke();
+		_world.postUpdate.invoke();
 		postUpdate.invoke();
 	}
 
 	/**
-	 * Called from backend renderer. Any visible scene will have its draw commands rendered to OpenGL.
+	 * Called from backend renderer. Any visible world will have its draw commands rendered to OpenGL.
 	 */
 	public function onRender()
 	{
@@ -173,16 +175,16 @@ class Engine
 		preRender.invoke();
 
 		_renderer.startFrame();
-		for (scene in _iterator.reset(this))
+		for (world in _iterator.reset(this))
 		{
-			_renderer.startScene(scene);
-			HXP.renderingScene = scene;
-			scene.render();
-			for (commands in scene.batch)
+			_renderer.startScene(world);
+			HXP.renderingScene = world;
+			world.render();
+			for (commands in world.batch)
 			{
 				_renderer.render(commands);
 			}
-			_renderer.flushScene(scene);
+			_renderer.flushScene(world);
 		}
 		HXP.renderingScene = null;
 		_renderer.endFrame();
@@ -252,77 +254,77 @@ class Engine
 	/** @private Switch scenes if they've changed. */
 	inline function checkScene()
 	{
-		if (_scene != null && _scenes.length > 0 && _scenes[_scenes.length - 1] != _scene)
+		if (_world != null && _worlds.length > 0 && _worlds[_worlds.length - 1] != _world)
 		{
-			Log.debug("ending scene: " + Type.getClassName(Type.getClass(_scene)));
-			_scene.end();
-			_scene.updateLists(false);
-			if (_scene.autoClear && _scene.hasTween) _scene.clearTweens();
+			Log.debug("ending world: " + Type.getClassName(Type.getClass(_world)));
+			_world.end();
+			_world.updateLists(false);
+			if (_world.autoClear && _world.hasTween) _world.clearTweens();
 
-			_scene = _scenes[_scenes.length - 1];
+			_world = _worlds[_worlds.length - 1];
 
 			onSceneSwitch.invoke();
 
-			Log.debug("starting scene: " + Type.getClassName(Type.getClass(_scene)));
-			_scene.assetCache.enable();
-			_scene.updateLists();
-			if (_scene.started) _scene.resume();
-			else _scene.begin();
-			_scene.started = true;
-			_scene.updateLists(true);
+			Log.debug("starting world: " + Type.getClassName(Type.getClass(_world)));
+			_world.assetCache.enable();
+			_world.updateLists();
+			if (_world.started) _world.resume();
+			else _world.begin();
+			_world.started = true;
+			_world.updateLists(true);
 		}
 	}
 
 	/**
-	 * Push a scene onto the stack. It will not become active until the next update.
-	 * @param value  The scene to push
+	 * Push a world onto the stack. It will not become active until the next update.
+	 * @param value  The world to push
 	 * @since	2.5.3
 	 */
-	public function pushScene(value:Scene):Void
+	public function pushScene(value:World):Void
 	{
-		Log.debug("pushed scene: " + Type.getClassName(Type.getClass(_scene)));
-		_scenes.push(value);
+		Log.debug("pushed world: " + Type.getClassName(Type.getClass(_world)));
+		_worlds.push(value);
 	}
 
 	/**
-	 * Pop a scene from the stack. The current scene will remain active until the next update.
+	 * Pop a world from the stack. The current world will remain active until the next update.
 	 * @since	2.5.3
 	 */
-	public function popScene():Scene
+	public function popScene():World
 	{
-		Log.debug("popped scene: " + Type.getClassName(Type.getClass(_scene)));
-		var scene = _scenes.pop();
-		if (scene.assetCache.enabled)
+		Log.debug("popped world: " + Type.getClassName(Type.getClass(_world)));
+		var world = _worlds.pop();
+		if (world.assetCache.enabled)
 		{
-			scene.assetCache.dispose();
+			world.assetCache.dispose();
 		}
-		return scene;
+		return world;
 	}
 
 	/**
-	 * The currently active Scene object. When you set this, the Scene is flagged
+	 * The currently active World object. When you set this, the World is flagged
 	 * to switch, but won't actually do so until the end of the current frame.
 	 */
-	public var scene(get, set):Scene;
-	inline function get_scene():Scene return _scene;
-	function set_scene(value:Scene):Scene
+	public var world(get, set):World;
+	inline function get_world():World return _world;
+	function set_world(value:World):World
 	{
-		if (_scene == value) return value;
-		if (_scenes.length > 0)
+		if (_world == value) return value;
+		if (_worlds.length > 0)
 		{
 			popScene();
 		}
-		_scenes.push(value);
-		return _scene;
+		_worlds.push(value);
+		return _world;
 	}
 
 	public function iterator() return _iterator.reset(this);
 
 	var app:App;
 
-	// Scene information.
-	var _scene:Scene = new Scene();
-	var _scenes:Array<Scene> = new Array<Scene>();
+	// World information.
+	var _world:World = new World();
+	var _worlds:Array<World> = new Array<World>();
 
 	// Timing information.
 	var _delta:Float = 0;
@@ -357,7 +359,7 @@ private class VisibleSceneIterator
 		return scenes.length > 0;
 	}
 
-	public inline function next():Scene
+	public inline function next():World
 	{
 		return scenes.pop();
 	}
@@ -372,21 +374,21 @@ private class VisibleSceneIterator
 			scenes.push(engine.console);
 		}
 
-		var scene:Scene;
-		var i = engine._scenes.length - 1;
+		var world:World;
+		var i = engine._worlds.length - 1;
 		while (i >= 0)
 		{
-			scene = engine._scenes[i];
-			if (scene.visible && scene.started)
+			world = engine._worlds[i];
+			if (world.visible && world.started)
 			{
-				scenes.push(scene);
+				scenes.push(world);
 			}
-			// if this scene has a solid background, stop adding scenes
-			if (scene.bgAlpha == 1) break;
+			// if this world has a solid background, stop adding scenes
+			if (world.bgAlpha == 1) break;
 			--i;
 		}
 		return this;
 	}
 
-	var scenes:Array<Scene> = [];
+	var scenes:Array<World> = [];
 }

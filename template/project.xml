@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<meta title="" package="" version="1.0.0" company=""/>
+
+	<app file="Main" main="Main" path="export" preloader="haxepunk.Preloader"/>
+
+	<icon path="HaxePunk-icon.svg"/>
+
+	<window fps="60" background="0x333333"/>
+	<window width="800" height="600" resizable="true" unless="mobile"/>
+	<window width="0" height="0" fullscreen="true" if="mobile"/>
+	<window orientation="landscape" vsync="true" antialiasing="0" if="cpp"/>
+
+	<haxedef name="hxp_debug" unless="release" />
+	<haxedef name="hxp_debug" if="debug"/>
+	<haxedef name="source-header" value="haxe"/>
+	<haxedef name="webgl" if="html5"/>
+	<haxedef name="NME_ALPHA_MODE" value="preprocess" />
+
+	<haxelib name="openfl"/>
+
+	<source path="source"/>
+	<source path="{{Haxepunk}}"/>
+
+	<assets path="assets/graphics" rename="graphics"/>
+	<assets path="assets/audio" rename="audio"/>
+	<assets path="assets/font" rename="font" />
+	<assets path="assets/atlas" rename="atlas"/>
+</project>

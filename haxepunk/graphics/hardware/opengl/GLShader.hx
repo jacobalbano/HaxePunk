@@ -1,3 +1,3 @@
 package haxepunk.graphics.hardware.opengl;
 
-typedef GLShader = UInt;
+typedef GLShader = lime.graphics.opengl.GLShader;

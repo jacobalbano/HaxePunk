@@ -1,5 +1,11 @@
 HaxePunk CHANGELOG
 
+v4.1.1
+------------------------------
+Lean-and-mean cutdown
+Reverted Scene to World
+No more fussing with backends; everything uses Lime
+
 v4.1.0
 ------------------------------
 

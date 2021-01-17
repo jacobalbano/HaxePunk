@@ -1,20 +1,33 @@
 package haxepunk;
 
-class App
+class App extends haxepunk._internal.FlashApp
 {
-	public var fullscreen(get, set):Bool;
-	inline function get_fullscreen():Bool return false;
-	inline function set_fullscreen(value:Bool):Bool return value;
+	#if (openfl >= "8.0.0")
+	override function onEnterFrame(e)
+	{
+		invalidate();
+		super.onEnterFrame(e);
+	}
+	#end
 
-	public function new(engine:Engine) {}
-
-	public function init() {}
-
-	public function getTimeMillis():Float return 0;
-	public function getMemoryUse():Float return 0;
-
-	public function multiTouchSupported():Bool return false;
-
-	public function getMouseX():Float return 0;
-	public function getMouseY():Float return 0;
+	override function initRenderer()
+	{
+		#if (openfl >= "8.0.0")
+		// use the RenderEvent API
+		addEventListener(openfl.events.RenderEvent.RENDER_OPENGL, function(event) {
+			var renderer:openfl.display.OpenGLRenderer = cast event.renderer;
+			haxepunk.graphics.hardware.opengl.GLInternal.gl = renderer.gl;
+			haxepunk.graphics.hardware.opengl.GLInternal.renderer = renderer;
+			engine.onRender();
+		});
+		#else
+		// create an OpenGLView object and use the engine's render method
+		var view = new openfl.display.OpenGLView();
+		view.render = function(rect:openfl.geom.Rectangle)
+		{
+			engine.onRender();
+		};
+		addChild(view);
+		#end
+	}
 }

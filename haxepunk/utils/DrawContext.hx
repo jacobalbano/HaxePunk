@@ -13,9 +13,9 @@ import haxepunk.utils.Color;
 class DrawContext
 {
 	/**
-	 * The Scene to draw to. If null, will draw to the current active scene.
+	 * The World to draw to. If null, will draw to the current active world.
 	 */
-	public var scene:Scene;
+	public var world:World;
 
 	/**
 	 * The blending mode used by Draw functions. This will not
@@ -386,13 +386,13 @@ class DrawContext
 		polyline(points);
 	}
 
-	/** @private Helper function to grab a DrawCommand object from the current scene */
+	/** @private Helper function to grab a DrawCommand object from the current world */
 	@:access(haxepunk.graphics.hardware.SceneRenderer)
 	inline function begin()
 	{
 		if (shader == null) shader = new ColorShader();
-		var scene = (this.scene == null) ? (HXP.renderingScene == null ? HXP.scene : HXP.renderingScene) : this.scene;
-		command = scene.batch.getDrawCommand(null, shader, smooth, blend, null);
+		var world = (this.world == null) ? (HXP.renderingScene == null ? HXP.world : HXP.renderingScene) : this.world;
+		command = world.batch.getDrawCommand(null, shader, smooth, blend, null);
 	}
 
 	inline function drawTriangle(v1:Vector2, v2:Vector2, v3:Vector2):Void

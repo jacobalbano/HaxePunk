@@ -11,10 +11,10 @@ import haxepunk.math.Vector2;
 typedef SolidType = OneOf<String, Array<String>>;
 
 /**
- * Main game Entity class updated by `Scene`.
+ * Main game Entity class updated by `World`.
  */
 @:allow(haxepunk.Mask)
-@:allow(haxepunk.Scene)
+@:allow(haxepunk.World)
 class Entity extends Tweener
 {
 	/**
@@ -53,7 +53,7 @@ class Entity extends Tweener
 	inline function set_enabled(v:Bool) return active = visible = collidable = v;
 
 	/**
-	 * X position of the Entity in the Scene.
+	 * X position of the Entity in the World.
 	 */
 	@:isVar public var x(get, set):Float = 0;
 	function get_x():Float
@@ -68,7 +68,7 @@ class Entity extends Tweener
 	}
 
 	/**
-	 * Y position of the Entity in the Scene.
+	 * Y position of the Entity in the World.
 	 */
 	@:isVar public var y(get, set):Float = 0;
 	function get_y():Float
@@ -164,17 +164,17 @@ class Entity extends Tweener
 	}
 
 	/**
-	 * Override this, called when the Entity is added to a Scene.
+	 * Override this, called when the Entity is added to a World.
 	 */
 	public function added():Void {}
 
 	/**
-	 * Override this, called when the Entity is removed from a Scene.
+	 * Override this, called when the Entity is removed from a World.
 	 */
 	public function removed():Void {}
 
 	/**
-	 * Override this, called when the Scene is resized.
+	 * Override this, called when the World is resized.
 	 */
 	public function resized():Void {}
 
@@ -242,9 +242,9 @@ class Entity extends Tweener
 	 */
 	public function collide(type:String, x:Float, y:Float):Entity
 	{
-		if (_scene == null) return null;
+		if (_world == null) return null;
 
-		var entities = _scene.entitiesForType(type);
+		var entities = _world.entitiesForType(type);
 		if (!collidable || entities == null) return null;
 
 		_x = this.x; _y = this.y;
@@ -431,9 +431,9 @@ class Entity extends Tweener
 	 */
 	public function collideInto<E:Entity>(type:String, x:Float, y:Float, array:Array<E>):Void
 	{
-		if (_scene == null) return;
+		if (_world == null) return;
 
-		var entities = _scene.entitiesForType(type);
+		var entities = _world.entitiesForType(type);
 		if (!collidable || entities == null) return;
 
 		_x = this.x; _y = this.y;
@@ -483,17 +483,17 @@ class Entity extends Tweener
 	 */
 	public function collideTypesInto<E:Entity>(types:Array<String>, x:Float, y:Float, array:Array<E>)
 	{
-		if (_scene == null) return;
+		if (_world == null) return;
 		for (type in types) collideInto(type, x, y, array);
 	}
 
 	/**
-	 * The Scene object this Entity has been added to.
+	 * The World object this Entity has been added to.
 	 */
-	public var scene(get, never):Scene;
-	inline function get_scene():Scene
+	public var world(get, never):World;
+	inline function get_world():World
 	{
-		return _scene;
+		return _world;
 	}
 
 	/**
@@ -554,13 +554,13 @@ class Entity extends Tweener
 	function set_layer(value:Int):Int
 	{
 		if (_layer == value) return _layer;
-		if (_scene == null)
+		if (_world == null)
 		{
 			return _layer = value;
 		}
-		_scene.removeRender(this);
+		_world.removeRender(this);
 		_layer = value;
-		_scene.addRender(this);
+		_world.addRender(this);
 		return _layer;
 	}
 
@@ -572,13 +572,13 @@ class Entity extends Tweener
 	function set_type(value:String):String
 	{
 		if (_type == value) return _type;
-		if (_scene == null)
+		if (_world == null)
 		{
 			return _type = value;
 		}
-		if (_type != "") _scene.removeType(this);
+		if (_type != "") _world.removeType(this);
 		_type = value;
-		if (value != "") _scene.addType(this);
+		if (value != "") _world.addType(this);
 		return _type;
 	}
 
@@ -610,13 +610,13 @@ class Entity extends Tweener
 	function set_name(value:String):String
 	{
 		if (_name == value) return _name;
-		if (_scene == null)
+		if (_world == null)
 		{
 			return _name = value;
 		}
-		if (_name != "") _scene.unregisterName(this);
+		if (_name != "") _world.unregisterName(this);
 		_name = value;
-		if (value != "") _scene.registerName(this);
+		if (value != "") _world.registerName(this);
 		return _name;
 	}
 
@@ -949,7 +949,7 @@ class Entity extends Tweener
 
 	// Entity information.
 	var _class:String;
-	var _scene:Scene;
+	var _world:World;
 	var _type:String;
 	var _layer:Int = 0;
 	var _name:String;

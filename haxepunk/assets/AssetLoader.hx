@@ -2,23 +2,24 @@ package haxepunk.assets;
 
 import haxepunk.graphics.hardware.Texture;
 
-/**
- * AssetLoader is used to load a new copy of an asset, bypassing the cache.
- */
+import openfl.Assets;
+// FIXME: add abstract for sound assets
+import openfl.media.Sound;
+
 class AssetLoader
 {
 	public static function getText(id:String):String
 	{
-		throw "Unimplemented";
+		return Assets.getText(id);
 	}
 
-	public static function getSound(id:String):Dynamic
+	public static function getSound(id:String):Sound
 	{
-		throw "Unimplemented";
+		return Assets.getSound(id, false);
 	}
 
 	public static function getTexture(id:String):Texture
 	{
-		throw "Unimplemented";
+		return Assets.getBitmapData(id, false);
 	}
 }

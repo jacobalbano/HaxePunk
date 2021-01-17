@@ -8,8 +8,8 @@ import haxepunk.math.MathUtil;
 import haxepunk.math.Rectangle;
 
 #if (lime || nme)
-import flash.geom.Point;
-import flash.geom.Matrix;
+import openfl.geom.Point;
+import openfl.geom.Matrix;
 #end
 
 

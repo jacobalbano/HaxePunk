@@ -1,0 +1,47 @@
+{
+	"version": "2.0.0",
+	"command": "haxelib",
+	"args": ["run", "lime"],
+	"tasks": [
+		{
+			"label": "html5 release",
+			"args": ["test", "html5"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"label": "html5 debug",
+			"args": ["test", "html5", "-debug"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"label": "cpp release",
+			"args": ["test", "cpp"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"label": "cpp debug",
+			"args": ["test", "cpp", "-debug"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"label": "android debug",
+			"args": ["test", "android", "-debug"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"label": "android release",
+			"args": ["test", "android"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"label": "ios debug",
+			"args": ["test", "ios", "-debug"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"label": "ios release",
+			"args": ["test", "ios"],
+			"problemMatcher": "$haxe"
+		}
+	]
+}

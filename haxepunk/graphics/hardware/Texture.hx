@@ -2,24 +2,41 @@ package haxepunk.graphics.hardware;
 
 import haxepunk.utils.Color;
 
-class Texture
+import openfl.display.BitmapData;
+import openfl.geom.Point;
+
+@:forward(getPixel, setPixel, clone, dispose)
+abstract Texture(BitmapData) from BitmapData to BitmapData
 {
+	public var width(get, never):Int;
+	inline function get_width() return this == null ? 0 : this.width;
+
+	public var height(get, never):Int;
+	inline function get_height() return this == null ? 0 : this.height;
+
 	public static inline function create(width:Int, height:Int, transparent:Bool=false, color:Color=0):Texture
 	{
-		return null;
+		return new BitmapData(width, height, transparent, color);
 	}
 
-	public var width:Int = 0;
-	public var height:Int = 0;
-
-	public function getPixel(x:Int, y:Int):Color
+	public inline function removeColor(color:Color)
 	{
-		return 0;
+		this.threshold(this, this.rect, _zero, "==", color, 0x00000000, 0xFFFFFFFF, true);
 	}
-	public function setPixel(x:Int, y:Int, c:Color) {}
 
-	public function removeColor(color:Color) {}
-	public function clearColor(color:Color) {}
-	public function drawCircle(x:Float, y:Float, radius:Float) {}
-	public function dispose() {}
+	public inline function clearColor(color:Color)
+	{
+		this.fillRect(this.rect, color);
+	}
+
+	public function drawCircle(x:Float, y:Float, radius:Float)
+	{
+		var sprite = new flash.display.Sprite();
+		sprite.graphics.clear();
+		sprite.graphics.beginFill(0xFFFFFF);
+		sprite.graphics.drawCircle(x, y, radius);
+		this.draw(sprite);
+	}
+
+	static var _zero = new Point(0, 0);
 }

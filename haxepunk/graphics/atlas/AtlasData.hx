@@ -44,10 +44,10 @@ class AtlasData
 	}
 
 	/**
-	 * Sets the scene object
-	 * @param	scene	The scene object to set
+	 * Sets the world object
+	 * @param	world	The world object to set
 	 */
-	@:allow(haxepunk.Scene)
+	@:allow(haxepunk.World)
 	static inline function startScene(batch:DrawCommandBatch):Void
 	{
 		_batch = batch;

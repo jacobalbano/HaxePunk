@@ -26,11 +26,13 @@ abstract LogLevel(Int) from Int to Int
 	public inline function format(s:String, color:Bool = true, ?pos:haxe.PosInfos):String
 	{
 		var d = Date.now().toString();
-		var p = StringTools.lpad(pos.fileName, " ", longest) + ":" + StringTools.lpad(Std.string(pos.lineNumber), " ", 4) + ":";
+		var filename = pos.fileName;
+		filename = filename.substr(filename.lastIndexOf('/') + 1);
+		var p = filename + ":" + Std.string(pos.lineNumber) + ":";
 		var l = toString();
 		#if desktop
 		var colorize = color && Sys.systemName() != "Windows";
-		if (pos.fileName.length > longest) longest = pos.fileName.length;
+		if (filename.length > longest) longest = filename.length;
 		if (!colorize) return '$d $p  $l: $s';
 		else return switch (this)
 		{

@@ -1,3 +1,7 @@
 package haxepunk.graphics.hardware.opengl;
 
-typedef GLUniformLocation = UInt;
+#if js
+typedef GLUniformLocation = js.html.webgl.UniformLocation;
+#else
+typedef GLUniformLocation = lime.graphics.opengl.GLUniformLocation;
+#end

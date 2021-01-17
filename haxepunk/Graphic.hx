@@ -273,7 +273,7 @@ class Graphic
 	public function update() {}
 
 	/**
-	 * Removes the graphic from the scene
+	 * Removes the graphic from the world
 	 */
 	public function destroy() {}
 

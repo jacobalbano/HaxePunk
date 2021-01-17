@@ -1,3 +1,3 @@
 package haxepunk.graphics.hardware.opengl;
 
-typedef GLTexture = UInt;
+typedef GLTexture = lime.graphics.opengl.GLTexture;

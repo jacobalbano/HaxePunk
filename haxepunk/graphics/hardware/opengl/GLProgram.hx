@@ -1,3 +1,3 @@
 package haxepunk.graphics.hardware.opengl;
 
-typedef GLProgram = UInt;
+typedef GLProgram = lime.graphics.opengl.GLProgram;

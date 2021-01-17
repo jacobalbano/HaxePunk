@@ -1,3 +1,3 @@
 package haxepunk.graphics.text;
 
-typedef TextAlignType = String;
+typedef TextAlignType = openfl.text.TextFormatAlign;

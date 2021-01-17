@@ -1,7 +1,7 @@
 package haxepunk;
 
 /**
- * A group of entities which can be added to or removed from the Scene and
+ * A group of entities which can be added to or removed from the World and
  * moved together. Also supports object pooling.
  * @since	2.6.0
  */
@@ -23,7 +23,7 @@ class EntityList<T:Entity> extends Entity
 	}
 
 	/**
-	 * Add an Entity to this EntityList and its Scene.
+	 * Add an Entity to this EntityList and its World.
 	 * @param	entity		The Entity to be added.
 	 * @param	index		Position to insert the Entity, default last.
 	 * @return	The Entity.
@@ -35,9 +35,9 @@ class EntityList<T:Entity> extends Entity
 		else
 			entities.insert(index, entity);
 		if (type != "") entity.type = type;
-		if (scene != null)
+		if (world != null)
 		{
-			scene.add(entity);
+			world.add(entity);
 		}
 		entity.parent = this;
 		entity.layer = layer;
@@ -46,16 +46,16 @@ class EntityList<T:Entity> extends Entity
 	}
 
 	/**
-	 * Remove an Entity from this EntityList and its Scene.
+	 * Remove an Entity from this EntityList and its World.
 	 * @param	entity		The Entity to be removed.
 	 * @return	The Entity.
 	 */
 	public function remove(entity:T):T
 	{
 		entities.remove(entity);
-		if (scene != null)
+		if (world != null)
 		{
-			scene.remove(entity);
+			world.remove(entity);
 		}
 		entity.parent = null;
 		return entity;
@@ -66,9 +66,9 @@ class EntityList<T:Entity> extends Entity
 		var entity = entities.pop();
 		if (entity != null)
 		{
-			if (scene != null)
+			if (world != null)
 			{
-				scene.remove(entity);
+				world.remove(entity);
 			}
 			entity.parent = null;
 		}
@@ -94,22 +94,22 @@ class EntityList<T:Entity> extends Entity
 	override public function added()
 	{
 		super.added();
-		if (scene != null)
+		if (world != null)
 		{
 			for (entity in entities)
 			{
-				scene.add(entity);
+				world.add(entity);
 			}
 		}
 	}
 
 	override public function removed()
 	{
-		if (scene != null)
+		if (world != null)
 		{
 			for (entity in entities)
 			{
-				scene.remove(entity);
+				world.remove(entity);
 			}
 		}
 		super.removed();
@@ -138,14 +138,14 @@ class EntityList<T:Entity> extends Entity
 
 	/**
 	 * Returns a new Entity, or a stored recycled Entity if one exists.
-	 * @param	addToScene			Add it to the Scene immediately.
+	 * @param	addToScene			Add it to the World immediately.
 	 * @param	constructorArgs		List of the entity constructor arguments (optional).
 	 * @return	The new Entity object.
 	 */
 	public function create(cls:Class<T>, ?constructorArgs:Array<Dynamic>):T
 	{
 		var entity:T = _recycled.pop();
-		if (entity == null || entity.scene != null)
+		if (entity == null || entity.world != null)
 		{
 			if (entity != null)
 			{

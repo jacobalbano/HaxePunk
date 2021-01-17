@@ -13,7 +13,7 @@ import haxepunk.utils.BlendMode;
  * @since	2.6.0
  */
 @:dox(hide)
-@:access(haxepunk.Scene)
+@:access(haxepunk.World)
 @:access(haxepunk.Engine)
 class HardwareRenderer
 {
@@ -170,10 +170,10 @@ class HardwareRenderer
 	}
 
 	@:access(haxepunk.Screen)
-	public function startScene(scene:Scene)
+	public function startScene(world:World)
 	{
 		GLUtils.checkForErrors();
-		_tracking = scene.trackDrawCalls;
+		_tracking = world.trackDrawCalls;
 
 		if (buffer == null || GLUtils.invalid(buffer.glBuffer))
 		{
@@ -189,7 +189,7 @@ class HardwareRenderer
 		screenScaleX = screen.scaleX;
 		screenScaleY = screen.scaleY;
 
-		var postProcess:Array<SceneShader> = scene.shaders;
+		var postProcess:Array<SceneShader> = world.shaders;
 		var firstShader:SceneShader = null;
 		if (postProcess != null) for (p in postProcess)
 		{
@@ -218,16 +218,16 @@ class HardwareRenderer
 			bindDefaultFramebuffer();
 		}
 
-		x = Std.int(screen.x + Math.max(scene.x, 0));
-		y = Std.int(screen.y + Math.max(scene.y, 0));
-		width = scene.width;
-		height = scene.height;
+		x = Std.int(screen.x + Math.max(world.x, 0));
+		y = Std.int(screen.y + Math.max(world.y, 0));
+		width = world.width;
+		height = world.height;
 
 		ortho(-x, screenWidth - x, screenHeight - y, -y);
 	}
 
 	@:access(haxepunk.Screen)
-	public function flushScene(scene:Scene)
+	public function flushScene(world:World)
 	{
 		var screen = HXP.screen;
 		screen.width = screenWidth;
@@ -235,7 +235,7 @@ class HardwareRenderer
 		screen.scaleX = screenScaleX;
 		screen.scaleY = screenScaleY;
 
-		var postProcess:Array<SceneShader> = scene.shaders;
+		var postProcess:Array<SceneShader> = world.shaders;
 		var hasPostProcess = false;
 		if (postProcess != null) for (p in postProcess)
 		{
