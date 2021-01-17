@@ -290,7 +290,7 @@ class World extends Tweener
 	 * X position of the mouse in the World.
 	 */
 	public var mouseX(get, null):Int;
-	inline function get_mouseX():Int
+	function get_mouseX():Int
 	{
 		return Std.int((HXP.app.getMouseX() - HXP.screen.x - x) / camera.screenScaleX + camera.x);
 	}
@@ -299,7 +299,7 @@ class World extends Tweener
 	 * Y position of the mouse in the world.
 	 */
 	public var mouseY(get, null):Int;
-	inline function get_mouseY():Int
+	function get_mouseY():Int
 	{
 		return Std.int((HXP.app.getMouseY() - HXP.screen.y - y) / camera.screenScaleY + camera.y);
 	}

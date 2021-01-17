@@ -13,6 +13,7 @@ typedef SolidType = OneOf<String, Array<String>>;
 /**
  * Main game Entity class updated by `World`.
  */
+@:rtti
 @:allow(haxepunk.Mask)
 @:allow(haxepunk.World)
 class Entity extends Tweener
