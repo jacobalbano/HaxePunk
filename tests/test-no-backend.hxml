@@ -1,9 +1,0 @@
--cp ..
--cp src
--main TestMain
--lib munit
--lib hamcrest
---no-inline
--D unit_test
--D linux
--neko test.n

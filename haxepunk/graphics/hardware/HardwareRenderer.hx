@@ -1,8 +1,9 @@
 package haxepunk.graphics.hardware;
 
-import haxepunk.graphics.hardware.opengl.GL;
-import haxepunk.graphics.hardware.opengl.GLFramebuffer;
+import lime.graphics.opengl.GL;
+import lime.graphics.opengl.GLFramebuffer;
 import haxepunk.graphics.hardware.opengl.GLUtils;
+import haxepunk.graphics.hardware.Float32Array;
 import haxepunk.HXP;
 import haxepunk.graphics.shader.SceneShader;
 import haxepunk.utils.BlendMode;

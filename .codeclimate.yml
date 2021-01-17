@@ -1,8 +1,0 @@
-engines:
- haxe-checkstyle:
-    enabled: true
-    exclude_paths:
-      - "tests/"
-ratings:
-  paths:
-    - "haxepunk/**.hx"

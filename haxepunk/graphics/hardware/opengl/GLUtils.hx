@@ -1,5 +1,6 @@
 package haxepunk.graphics.hardware.opengl;
 
+import lime.graphics.opengl.GL;
 import haxe.PosInfos;
 
 @:dox(hide)

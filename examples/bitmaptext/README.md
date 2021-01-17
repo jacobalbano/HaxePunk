@@ -1,2 +1,0 @@
-BitmapText Demo
-===============

@@ -9,7 +9,6 @@ import haxepunk.math.Rectangle;
 import haxepunk.math.Vector2;
 import haxepunk.tweens.misc.Alarm;
 import haxepunk.tweens.misc.MultiVarTween;
-import haxepunk.utils.HaxelibInfo;
 
 /**
  * Static catch-all class used to access global properties and functions.
@@ -20,7 +19,7 @@ class HXP
 	 * The HaxePunk version.
 	 * Format: Major.Minor.Patch
 	 */
-	public static inline var VERSION:String = HaxelibInfo.version;
+	public static inline var VERSION:String = "4.0.1";
 
 	/**
 	 * Width of the game.

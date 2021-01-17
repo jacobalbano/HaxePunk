@@ -7,8 +7,9 @@ import js.lib.Int32Array;
 import js.html.Int32Array;
 #end
 #end
-import haxepunk.graphics.hardware.opengl.GL;
-import haxepunk.graphics.hardware.opengl.GLBuffer;
+import lime.graphics.opengl.GL;
+import lime.graphics.opengl.GLBuffer;
+import lime.graphics.opengl.GLTexture;
 import haxepunk.graphics.hardware.opengl.GLUtils;
 import haxepunk.graphics.shader.Shader.Attribute;
 
