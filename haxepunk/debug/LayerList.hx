@@ -54,7 +54,7 @@ class LayerList extends EntityList<LayerToggle>
 {
 	var alpha:Float = 0.5;
 	var mouseManager:MouseManager;
-	var sceneLabel:BitmapText;
+	var worldLabel:BitmapText;
 	var childY:Int = 8;
 
 	public function new(mouseManager:MouseManager)
@@ -64,11 +64,11 @@ class LayerList extends EntityList<LayerToggle>
 		width = 240;
 		height = 320;
 
-		sceneLabel = new BitmapText("World", {size: 12});
-		sceneLabel.x = 10;
-		sceneLabel.y = childY;
-		childY += sceneLabel.textHeight;
-		graphic = sceneLabel;
+		worldLabel = new BitmapText("World", {size: 12});
+		worldLabel.x = 10;
+		worldLabel.y = childY;
+		childY += worldLabel.textHeight;
+		graphic = worldLabel;
 
 		type = mouseManager.type;
 		mouseManager.add(this, null, null, onEnter, onExit);
@@ -94,7 +94,7 @@ class LayerList extends EntityList<LayerToggle>
 		}
 
 		var txt = Type.getClassName(Type.getClass(HXP.world));
-		if (sceneLabel.text != txt) sceneLabel.text = txt;
+		if (worldLabel.text != txt) worldLabel.text = txt;
 	}
 
 	override public function render(camera:Camera)

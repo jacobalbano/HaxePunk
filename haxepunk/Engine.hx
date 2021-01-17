@@ -141,7 +141,7 @@ class Engine
 		}
 
 		_world.updateLists();
-		checkScene();
+		checkWorld();
 
 		preUpdate.invoke();
 		_world.preUpdate.invoke();
@@ -251,8 +251,8 @@ class Engine
 		Input.postUpdate();
 	}
 
-	/** @private Switch scenes if they've changed. */
-	inline function checkScene()
+	/** @private Switch worlds if they've changed. */
+	inline function checkWorld()
 	{
 		if (_world != null && _worlds.length > 0 && _worlds[_worlds.length - 1] != _world)
 		{
@@ -263,7 +263,7 @@ class Engine
 
 			_world = _worlds[_worlds.length - 1];
 
-			onSceneSwitch.invoke();
+			onworldswitch.invoke();
 
 			Log.debug("starting world: " + Type.getClassName(Type.getClass(_world)));
 			_world.assetCache.enable();
@@ -290,7 +290,7 @@ class Engine
 	 * Pop a world from the stack. The current world will remain active until the next update.
 	 * @since	2.5.3
 	 */
-	public function popScene():World
+	public function popWorld():World
 	{
 		Log.debug("popped world: " + Type.getClassName(Type.getClass(_world)));
 		var world = _worlds.pop();
@@ -312,7 +312,7 @@ class Engine
 		if (_world == value) return value;
 		if (_worlds.length > 0)
 		{
-			popScene();
+			popWorld();
 		}
 		_worlds.push(value);
 		return _world;
@@ -356,22 +356,22 @@ private class VisibleSceneIterator
 
 	public inline function hasNext():Bool
 	{
-		return scenes.length > 0;
+		return worlds.length > 0;
 	}
 
 	public inline function next():World
 	{
-		return scenes.pop();
+		return worlds.pop();
 	}
 
 	@:access(haxepunk.Engine)
 	public function reset(engine:Engine):VisibleSceneIterator
 	{
-		HXP.clear(scenes);
+		HXP.clear(worlds);
 
 		if (engine.console != null)
 		{
-			scenes.push(engine.console);
+			worlds.push(engine.console);
 		}
 
 		var world:World;
@@ -381,14 +381,14 @@ private class VisibleSceneIterator
 			world = engine._worlds[i];
 			if (world.visible && world.started)
 			{
-				scenes.push(world);
+				worlds.push(world);
 			}
-			// if this world has a solid background, stop adding scenes
+			// if this world has a solid background, stop adding worlds
 			if (world.bgAlpha == 1) break;
 			--i;
 		}
 		return this;
 	}
 
-	var scenes:Array<World> = [];
+	var worlds:Array<World> = [];
 }
