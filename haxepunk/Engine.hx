@@ -283,7 +283,7 @@ class Engine
 	public function pushWorld(value:World):Void
 	{
 		Log.debug("pushed world: " + Type.getClassName(Type.getClass(_world)));
-		worldX(value);
+		_worlds.push(value);
 	}
 
 	/**

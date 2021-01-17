@@ -268,14 +268,7 @@ class World extends Tweener
 		preRender.invoke();
 
 		// render the entities in order of depth
-		for (layer in _layerList)
-		{
-			if (!layerVisible(layer)) continue;
-			for (e in _layers.get(layer))
-			{
-				if (e.visible) e.render(e.camera == null ? camera : e.camera);
-			}
-		}
+		renderEntities();
 
 		// render the cursor if this is the topmost world
 		if (HXP.cursor != null && HXP.cursor.visible && this == HXP.world)
@@ -284,6 +277,18 @@ class World extends Tweener
 		}
 
 		postRender.invoke();
+	}
+
+	public function renderEntities():Void
+	{		
+		for (layer in _layerList)
+		{
+			if (!layerVisible(layer)) continue;
+			for (e in _layers.get(layer))
+			{
+				if (e.visible) e.render(e.camera == null ? camera : e.camera);
+			}
+		}
 	}
 
 	/**
