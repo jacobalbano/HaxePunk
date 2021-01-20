@@ -101,7 +101,6 @@ class Mouse
 	{
 		if (mouseWheel)
 		{
-			mouseWheel = false;
 			return _mouseWheelDelta;
 		}
 		return 0;
@@ -195,7 +194,8 @@ class Mouse
 
 	public static function postUpdate()
 	{
-		mousePressed = mouseReleased = middleMousePressed = middleMouseReleased = rightMousePressed = rightMouseReleased = false;
+		
+		mouseWheel = mousePressed = mouseReleased = middleMousePressed = middleMouseReleased = rightMousePressed = rightMouseReleased = false;
 	}
 
 	static function onMouseDown(_)
