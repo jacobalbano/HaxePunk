@@ -84,9 +84,11 @@ class Shader
 	}
 	var attributeNames:Array<String> = new Array();
 	var attributes:Map<String, Attribute> = new Map();
-	var uniformIndices:Map<String, GLUniformLocation> = new Map();
+	var nameIndexMapping:Map<String, Int> = new Map();
+
 	var uniformNames:Array<String> = new Array();
-	var uniformValues:Map<String, Float> = new Map();
+	var uniformValues:Array<Float> = new Array();
+	var uniformLocations:Map<String, GLUniformLocation> = new Map();
 
 	public function new(vertexSource:String, fragmentSource:String)
 	{
@@ -139,7 +141,7 @@ class Shader
 
 	public function destroy()
 	{
-		for (key in uniformIndices.keys()) uniformIndices.remove(key);
+		for (key in uniformLocations.keys()) uniformLocations.remove(key);
 		for (key in attributes.keys()) attributes.remove(key);
 	}
 
@@ -227,9 +229,10 @@ class Shader
 
 		GL.useProgram(glProgram);
 
-		for (name in uniformNames)
+		for (i in 0...uniformValues.length)
 		{
-			GL.uniform1f(uniformIndex(name), uniformValues[name]);
+			var name = uniformNames[i];
+			GL.uniform1f(uniformIndex(name), uniformValues[i]);
 		}
 
 		GL.enableVertexAttribArray(position.index);
@@ -270,11 +273,11 @@ class Shader
 	 */
 	public inline function uniformIndex(name:String):GLUniformLocation
 	{
-		if (!uniformIndices.exists(name))
-		{
-			uniformIndices[name] = GL.getUniformLocation(glProgram, name);
-		}
-		return uniformIndices[name];
+		var location = uniformLocations.get(name);
+		if (location == null)
+			uniformLocations[name] = location = GL.getUniformLocation(glProgram, name);
+
+		return location;
 	}
 
 	/**
@@ -282,11 +285,15 @@ class Shader
 	 */
 	public inline function setUniform(name:String, value:Float)
 	{
-		if (!uniformValues.exists(name))
+		var index = nameIndexMapping.get(name);
+		if (index == null)
 		{
+			index = uniformValues.length;
 			uniformNames.push(name);
+			uniformValues.push(value);
 		}
-		uniformValues[name] = value;
+		
+		uniformValues[index] = value;
 	}
 
 	/**
