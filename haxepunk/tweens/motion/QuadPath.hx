@@ -86,6 +86,12 @@ class QuadPath extends Motion
 		_c = _curve[_index + 1];
 		x = _a.x * (1 - td) * (1 - td) + _b.x * 2 * (1 - td) * td + _c.x * td * td;
 		y = _a.y * (1 - td) * (1 - td) + _b.y * 2 * (1 - td) * td + _c.y * td * td;
+		
+		if (object != null)
+		{
+			object.x = x;
+			object.y = y;
+		}
 	}
 
 	/** @private Updates the path, preparing the curve. */

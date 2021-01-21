@@ -2,11 +2,17 @@ package haxepunk.tweens.motion;
 
 import haxepunk.Tween;
 
+typedef MotionTarget = {
+	var x(get, set):Float;
+	var y(get, set):Float;
+}
 /**
  * Base class for motion Tweens.
  */
 class Motion extends Tween
 {
+	public var object:MotionTarget;
+	
 	/**
 	 * Current x position of the Tween.
 	 */
