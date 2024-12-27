@@ -1,7 +1,6 @@
 package haxepunk.screen;
 
-@:enum
-abstract UniformScaleType(Int)
+enum abstract UniformScaleType(Int)
 {
 	/**
 	 * When the screen ratio changes, zoom in (show less of the game.)

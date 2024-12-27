@@ -3,8 +3,7 @@ package haxepunk.input;
 /**
  * List of keys to be used with `Input`.
  */
-@:enum
-abstract Key(Int) from Int to Int
+enum abstract Key(Int) from Int to Int
 {
 	/**
 	 * Contains the string of the last keys pressed

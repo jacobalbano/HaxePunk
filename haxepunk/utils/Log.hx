@@ -1,7 +1,6 @@
 package haxepunk.utils;
 
-@:enum
-abstract LogLevel(Int) from Int to Int
+enum abstract LogLevel(Int) from Int to Int
 {
 	var Debug = 10;
 	var Info = 20;

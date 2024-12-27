@@ -25,8 +25,7 @@ class AssetMacros
 						{
 							// keep this asset cached here too, in case the owning cache is
 							// disposed before this one is
-							Log.debug('adding asset cache reference: ' + ${cache} + ':$id -> ' + otherCache.name + ':$id');
-							${map}[${id}] = cached;
+							Log.debug('adding asset cache reference: ' + ${cache} + ':' + ${id} + ' -> ' + otherCache.name + ':' + ${id});							${map}[${id}] = cached;
 							${onRef};
 						}
 						result = cached;

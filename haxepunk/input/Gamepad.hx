@@ -9,8 +9,7 @@ import haxepunk.input.gamepad.GamepadType;
 
 typedef GamepadID = Int;
 
-@:enum
-abstract JoyButtonState(Int) from Int to Int
+enum abstract JoyButtonState(Int) from Int to Int
 {
 	var BUTTON_ON = 1;
 	var BUTTON_OFF = 0;

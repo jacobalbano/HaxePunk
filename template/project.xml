@@ -2,7 +2,7 @@
 <project>
 	<meta title="" package="" version="1.0.0" company=""/>
 
-	<app file="Main" main="Main" path="export" preloader="haxepunk.Preloader"/>
+	<app file="source.Main" main="Main" path="export" preloader="haxepunk.Preloader"/>
 
 	<icon path="HaxePunk-icon.svg"/>
 
@@ -20,7 +20,7 @@
 	<haxelib name="openfl"/>
 
 	<source path="source"/>
-	<source path="{{Haxepunk}}"/>
+	<source path="../"/>
 
 	<assets path="assets/graphics" rename="graphics"/>
 	<assets path="assets/audio" rename="audio"/>

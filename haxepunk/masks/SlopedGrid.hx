@@ -6,8 +6,7 @@ import haxepunk.math.MathUtil;
 import haxepunk.math.Rectangle;
 import haxepunk.math.Vector2;
 
-@:enum
-abstract TileShape(Int)
+enum abstract TileShape(Int)
 {
 	var Empty = 0;
 	var Solid = 1;

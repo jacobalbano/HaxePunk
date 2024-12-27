@@ -5,8 +5,7 @@ package haxepunk.input.gamepad;
  *
  * @since	4.1.0
  */
-@:enum
-abstract GamepadButton(Int) from Int to Int
+enum abstract GamepadButton(Int) from Int to Int
 {
 	public static var all:Array<GamepadButton> = [BtnA, BtnB, BtnX, BtnY, LeftShoulder, RightShoulder, Back, Start, LeftStick, RightStick, Guide, DpadUp, DpadDown, DpadLeft, DpadRight];
 

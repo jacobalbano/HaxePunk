@@ -76,7 +76,7 @@ class ControllerData
 		}
 		catch (_:haxe.io.Eof) {}
 
-		var map = $a{[for (guid in map.keys()) macro $v{guid} => ${map[guid]}]};
+		var map = [for (guid in map.keys()) macro $v{guid} => ${map[guid]}];
 		return macro $a{map};
 	}
 

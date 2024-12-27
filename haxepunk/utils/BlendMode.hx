@@ -1,7 +1,6 @@
 package haxepunk.utils;
 
-@:enum
-abstract BlendMode(Int) from Int to Int {
+enum abstract BlendMode(Int) from Int to Int {
 	public var Add = 0;
 	public var Alpha = 1;
 	public var Multiply = 9;
