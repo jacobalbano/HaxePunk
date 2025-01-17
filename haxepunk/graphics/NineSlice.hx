@@ -10,7 +10,7 @@ import haxepunk.math.Vector2;
 /**
  * A NineSlice is an automatically scaling graphic cut into nine segments
  * (upper/middle/lower and left/middle/right.) NineSlice is useful when a
- * graphic has borders that should remain a constan size as the graphic scales
+ * graphic has borders that should remain a constant size as the graphic scales
  * (such as a UI button or panel.)
  */
 class NineSlice extends Graphic

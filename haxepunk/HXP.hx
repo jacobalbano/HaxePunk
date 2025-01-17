@@ -130,34 +130,14 @@ class HXP
 	/**
 	 * The choose function randomly chooses and returns one of the provided values.
 	 */
-	public static var choose(get, null):Dynamic;
-	static function get_choose():Dynamic
-	{
-		return Reflect.makeVarArgs(_choose);
-	}
-	static inline function _choose(objs:Array<Dynamic>):Dynamic
-	{
-		if (objs == null || objs.length == 0)
+	public static function choose<T>(options:Array<T>):T {
+		if (options.length != 0)
+		{
+			return options[Random.randInt(options.length)];
+		}
+		else
 		{
 			throw "Can't choose a random element on an empty array";
-		}
-
-		if (Std.isOfType(objs[0], Array)) // Passed an Array
-		{
-			var c:Array<Dynamic> = cast(objs[0], Array<Dynamic>);
-
-			if (c.length != 0)
-			{
-				return c[Random.randInt(c.length)];
-			}
-			else
-			{
-				throw "Can't choose a random element on an empty array";
-			}
-		}
-		else // Passed multiple args
-		{
-			return objs[Random.randInt(objs.length)];
 		}
 	}
 

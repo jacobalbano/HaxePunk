@@ -26,6 +26,7 @@ class Hitbox extends Mask
 		_x = x;
 		_y = y;
 		_check.set(Type.getClassName(Hitbox), collideHitbox);
+		debugColor = 0xff0000;
 	}
 
 	/** @private Collides against an Entity. */
@@ -136,9 +137,9 @@ class Hitbox extends Mask
 	{
 		if (parent != null)
 		{
-			Mask.drawContext.setColor(0xff0000, 0.25);
+			Mask.drawContext.setColor(debugColor, 0.25);
 			Mask.drawContext.rectFilled((parent.x - camera.x + x) * camera.screenScaleX, (parent.y - camera.y + y) * camera.screenScaleY, width * camera.screenScaleX, height * camera.screenScaleY);
-			Mask.drawContext.setColor(0xff0000, 0.5);
+			Mask.drawContext.setColor(debugColor, 0.5);
 			Mask.drawContext.rect((parent.x - camera.x + x) * camera.screenScaleX, (parent.y - camera.y + y) * camera.screenScaleY, width * camera.screenScaleX, height * camera.screenScaleY);
 		}
 	}

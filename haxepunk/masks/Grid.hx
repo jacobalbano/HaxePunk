@@ -58,6 +58,7 @@ class Grid extends Hitbox
 		_check.set(Type.getClassName(Hitbox), collideHitbox);
 		_check.set(Type.getClassName(Pixelmask), collidePixelmask);
 		_check.set(Type.getClassName(Grid), collideGrid);
+		debugColor = 0x0000ff;
 
 		data = new Array<Array<Bool>>();
 		for (x in 0...rows)
@@ -65,7 +66,7 @@ class Grid extends Hitbox
 			data.push(new Array<Bool>());
 			for (y in 0...columns)
 			{
-				data.push(false);
+				data[x][y] = false;
 			}
 		}
 	}
@@ -109,7 +110,7 @@ class Grid extends Hitbox
 		setTile(column, row, false);
 	}
 
-	inline function checkTile(column:Int, row:Int):Bool
+	public inline function checkTile(column:Int, row:Int):Bool
 	{
 		// check that tile is valid
 		return !(column < 0 || column > columns - 1 || row < 0 || row > rows - 1);
@@ -522,7 +523,7 @@ class Grid extends Hitbox
 					dc.lineThickness = 2;
 					dc.setColor(0xffffff, 0.3);
 					dc.rect(cellX, cellY, stepX, stepY);
-					dc.setColor(0x0000ff, 1);
+					dc.setColor(debugColor, 1);
 
 					if (x < columns - 1 && !row[x + 1])
 					{

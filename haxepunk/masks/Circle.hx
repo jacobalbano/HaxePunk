@@ -31,6 +31,7 @@ class Circle extends Hitbox
 		_check.set(Type.getClassName(Hitbox), collideHitbox);
 		_check.set(Type.getClassName(Grid), collideGrid);
 		_check.set(Type.getClassName(SlopedGrid), collideSlopedGrid);
+		debugColor = 0xff0000;
 	}
 
 	/** @private Collides against an Entity. */
@@ -255,9 +256,9 @@ class Circle extends Hitbox
 	override public function debugDraw(camera:Camera):Void
 	{
 		Mask.drawContext.lineThickness = 2;
-		Mask.drawContext.setColor(0xff0000, 0.25);
+		Mask.drawContext.setColor(debugColor, 0.25);
 		Mask.drawContext.circleFilled((_parent.x + _x - camera.x) * camera.screenScaleX, (_parent.y + _y - camera.y) * camera.screenScaleY, radius, camera.screenScaleX, camera.screenScaleY);
-		Mask.drawContext.setColor(0xff0000, 0.5);
+		Mask.drawContext.setColor(debugColor, 0.5);
 		Mask.drawContext.circle((_parent.x + _x - camera.x) * camera.screenScaleX, (_parent.y + _y - camera.y) * camera.screenScaleY, radius, camera.screenScaleX, camera.screenScaleY);
 	}
 

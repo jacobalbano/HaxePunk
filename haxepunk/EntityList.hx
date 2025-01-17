@@ -34,7 +34,7 @@ class EntityList<T:Entity> extends Entity
 			entities.push(entity);
 		else
 			entities.insert(index, entity);
-		if (type != "") entity.type = type;
+		if (type != "" && entity.type != "") entity.type = type;
 		if (world != null)
 		{
 			world.add(entity);

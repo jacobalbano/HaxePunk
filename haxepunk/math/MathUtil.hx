@@ -21,6 +21,26 @@ class MathUtil
 	public static inline var EPSILON = 1e-10;
 
 	/**
+	 * Convert a two-dimensional index to a one-dimensional index
+	 * @param x The X position in the grid
+	 * @param y The Y position in the grid
+	 * @param width The width of the grid
+	 * @return Int
+	 */
+	public static inline function oneDee(x:Int, y:Int, width:Int):Int {
+		return y * width + x;
+	}
+
+	/**
+	 * Convert a one-dimensional index to a two-dimensional position
+	 * @param index The 1d index
+	 * @param width The width of the grid
+	 */
+	public static inline function twoDee(index:Int, width:Int):{ x:Int, y:Int } {
+		return { x: index % width, y: Std.int(index / width) };
+	}
+
+	/**
 	 * Finds the sign of the provided value.
 	 * @param	value		The Float to evaluate.
 	 * @return	1 if value > 0, -1 if value < 0, and 0 when value == 0.

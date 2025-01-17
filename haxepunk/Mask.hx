@@ -1,5 +1,6 @@
 package haxepunk;
 
+import haxepunk.utils.Color;
 import haxepunk.Entity;
 import haxepunk.masks.Masklist;
 import haxepunk.utils.DrawContext;
@@ -12,6 +13,11 @@ import haxepunk.math.Vector2;
  */
 class Mask
 {
+	/**
+	 * The color that this mask should be drawn with in the Console
+	 */
+	public var debugColor:Color = 0x000000;
+
 	@:isVar public static var drawContext(get, null):DrawContext;
 	static inline function get_drawContext()
 	{

@@ -102,14 +102,14 @@ class Graphic
 	/**
 	 * Newly created graphics will have this `smooth` setting by default.
 	 */
-	public static var smoothDefault:Bool = true;
+	public static var smoothDefault:Bool = false;
 
 	/**
 	 * Newly created graphics will have this `pixelSnapping` setting by default,
 	 * except for `haxepunk.graphics.tile.*` graphics which will always default
 	 * to `true`.
 	 */
-	public static var pixelSnappingDefault:Bool = false;
+	public static var pixelSnappingDefault:Bool = true;
 
 	/**
 	 * If the graphic should update.

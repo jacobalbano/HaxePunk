@@ -35,6 +35,7 @@ class FlashApp extends Sprite
 
 		// on-stage event listener
 		addEventListener(Event.ADDED_TO_STAGE, onStage);
+		Lib.current.stage.quality = StageQuality.LOW;
 	}
 
 	public function init()
