@@ -1,1 +1,0 @@
-Place texture atlas files and subfolders here
