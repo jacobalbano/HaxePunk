@@ -851,10 +851,10 @@ class Entity extends Tweener
 		if (solidType == null) {
 			moveBy(x, y);
 		} else {
-			var fromX:Int = Math.round(this.x);
-			var fromY:Int = Math.round(this.y);
-			var toX:Int = fromX + x;
-			var toY:Int = fromY + y;
+			var fromX:Int = MathUtil.iround(this.x);
+			var fromY:Int = MathUtil.iround(this.y);
+			var toX:Int = fromX + Std.int(x);
+			var toY:Int = fromY + Std.int(y);
 			
 			var steep:Bool = Math.abs(toY - fromY) > Math.abs(toX - fromX);
 			
@@ -870,9 +870,9 @@ class Entity extends Tweener
 				toY = tmp;
 			}
 			
-			var deltaX:Int = Math.abs(toX - fromX);
-			var deltaY:Int = Math.abs(toY - fromY);
-			var error:Int = deltaX / 2;
+			var deltaX:Int = MathUtil.iabs(toX - fromX);
+			var deltaY:Int = MathUtil.iabs(toY - fromY);
+			var error:Int = Std.int(deltaX / 2);
 			var count:Int = -1;
 			
 			var xStep:Int = fromX < toX ? 1 : -1;
