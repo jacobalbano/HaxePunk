@@ -841,6 +841,74 @@ class Entity extends Tweener
 	}
 
 	/**
+	 * Moves the Entity by the x and y amount specified, using the Bresenham's line algorithm and retaining integer values for its x and y.
+	 * @param	x			Horizontal offset.
+	 * @param	y			Vertical offset.
+	 * @param	solidType	An optional collision type (or array of types) to stop flush against upon collision.
+	 * @param	precision	Distance between consecutive tests. Higher values are faster but increase the chance of missing collisions.
+	 */
+	public function moveByBresenham(x:Float, y:Float, ?solidType:SolidType, precision:Int = 1):Void {
+		if (solidType == null) {
+			moveBy(x, y);
+		} else {
+			var fromX:Int = Math.round(this.x);
+			var fromY:Int = Math.round(this.y);
+			var toX:Int = fromX + x;
+			var toY:Int = fromY + y;
+			
+			var steep:Bool = Math.abs(toY - fromY) > Math.abs(toX - fromX);
+			
+			if (steep) {	// swap x <-> y
+				var tmp:Int;
+				
+				tmp = fromX;
+				fromX = fromY;
+				fromY = tmp;
+				
+				tmp = toX;
+				toX = toY;
+				toY = tmp;
+			}
+			
+			var deltaX:Int = Math.abs(toX - fromX);
+			var deltaY:Int = Math.abs(toY - fromY);
+			var error:Int = deltaX / 2;
+			var count:Int = -1;
+			
+			var xStep:Int = fromX < toX ? 1 : -1;
+			var yStep:Int = fromY < toY ? 1 : -1;
+			
+			var hitEntity:Entity = null;
+			
+			while (fromX != toX) {
+				if (count == precision && count > 0) {
+					if (steep) {
+						moveTo(fromY, fromX, solidType, true);
+					} else {
+						moveTo(fromX, fromY, solidType, true);
+					}
+					count = 0;
+				}
+				
+				error -= deltaY;
+				if (error < 0) {
+					fromY += yStep;
+					error += deltaX;
+				}
+				fromX += xStep;
+				count++;
+			}
+			
+			// last point
+			if (steep) {
+				moveTo(fromY, fromX, solidType, true);
+			} else {
+				moveTo(fromX, fromY, solidType, true);
+			}
+		}
+	}
+
+	/**
 	 * Moves the Entity to the position, retaining integer values for its x and y.
 	 * @param	x			X position.
 	 * @param	y			Y position.
