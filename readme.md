@@ -14,4 +14,4 @@ haxelib run lime setup
 
 ### How to use
 ---
-Use the [template](https://github.com/jacobalbano/HaxePunk/tree/template) branch to create a new project
+Use the [template](https://github.com/jacobalbano/HaxepunkTemplate) repository to create a new project
