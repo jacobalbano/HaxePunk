@@ -14,9 +14,4 @@ haxelib run lime setup
 
 ### How to use
 ---
-- Rename the `template/` directory to whatever you want as your project folder
-- Edit `project.xml`:
-  - Set `<meta>` attributes as appropriate
-  - If you don't want to use the preloader, edit the `<app>` tag to remove the `preloader` attribute
-- Open the project folder in VSCode, select build target, and run
-- Builds will be placed in the `export/` folder
+Use the [template](https://github.com/jacobalbano/HaxePunk/tree/template) branch to create a new project
