@@ -25,6 +25,8 @@ class AtlasRegion implements IAtlasRegion
 	 */
 	public var height(get, never):Int;
 
+	public var parent(get, never):AtlasData;
+
 	/**
 	 * Creates a new AtlasRegion
 	 * @param  parent    The AtlasData parent to use for rendering
@@ -146,6 +148,7 @@ class AtlasRegion implements IAtlasRegion
 	inline function get_y():Float return _rect.y;
 	inline function get_width():Int return Std.int(_rect.width);
 	inline function get_height():Int return Std.int(_rect.height);
+	inline function get_parent():AtlasData return _parent;
 
 	var _rect:Rectangle;
 	var _parent:AtlasData;

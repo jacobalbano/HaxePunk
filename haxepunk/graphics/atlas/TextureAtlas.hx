@@ -56,7 +56,7 @@ class TextureAtlas extends Atlas
 		return GdxTexturePacker.load(file);
 	}
 
-	function new(?source:AtlasDataType)
+	public function new(?source:AtlasDataType)
 	{
 		_regions = new Map<String, AtlasRegion>();
 

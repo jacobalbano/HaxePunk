@@ -106,6 +106,8 @@ class Entity extends Tweener
 	 */
 	public var followCamera:Null<Camera> = null;
 
+	public var components(default, null):ComponentList;
+
 	/**
 	 * Width of the Entity's hitbox.
 	 */
@@ -147,6 +149,7 @@ class Entity extends Tweener
 		super();
 		this.x = x;
 		this.y = y;
+		components = new ComponentList(this);
 
 		originX = originY = 0;
 		width = height = 0;
@@ -237,13 +240,15 @@ class Entity extends Tweener
 	/**
 	 * Checks for a collision against an Entity type.
 	 * @param	type		The Entity type to check for.
-	 * @param	x			Virtual x position to place this Entity.
-	 * @param	y			Virtual y position to place this Entity.
+	 * @param	x			Virtual x position to place this Entity. Defaults to the current X position.
+	 * @param	y			Virtual y position to place this Entity. Defaults to the current Y position.
 	 * @return	The first Entity collided with, or null if none were collided.
 	 */
-	public function collide(type:String, x:Float, y:Float):Entity
+	public function collide(type:String, ?x:Float, ?y:Float):Entity
 	{
 		if (_world == null) return null;
+		if (x == null) x = this.x;
+		if (y == null) y = this.y;
 
 		var entities = _world.entitiesForType(type);
 		if (!collidable || entities == null) return null;
@@ -323,8 +328,10 @@ class Entity extends Tweener
 	 * @param	y		Virtual y position to place this Entity.
 	 * @return	The Entity if they overlap, or null if they don't.
 	 */
-	public function collideWith<E:Entity>(e:E, x:Float, y:Float):E
+	public function collideWith<E:Entity>(e:E, ?x:Float, ?y:Float):E
 	{
+		if (x == null) x = this.x;
+		if (y == null) y = this.y;
 		_x = this.x; _y = this.y;
 		this.x = x; this.y = y;
 
@@ -430,9 +437,11 @@ class Entity extends Tweener
 	 * @param	y			Virtual y position to place this Entity.
 	 * @param	array		The Array or Vector object to populate.
 	 */
-	public function collideInto<E:Entity>(type:String, x:Float, y:Float, array:Array<E>):Void
+	public function collideInto<E:Entity>(type:String, ?x:Float, ?y:Float, array:Array<E>):Void
 	{
 		if (_world == null) return;
+		if (x == null) x = this.x;
+		if (y == null) y = this.y;
 
 		var entities = _world.entitiesForType(type);
 		if (!collidable || entities == null) return;
@@ -482,7 +491,7 @@ class Entity extends Tweener
 	 * @param	y			Virtual y position to place this Entity.
 	 * @param	array		The Array or Vector object to populate.
 	 */
-	public function collideTypesInto<E:Entity>(types:Array<String>, x:Float, y:Float, array:Array<E>)
+	public function collideTypesInto<E:Entity>(types:Array<String>, ?x:Float, ?y:Float, array:Array<E>)
 	{
 		if (_world == null) return;
 		for (type in types) collideInto(type, x, y, array);

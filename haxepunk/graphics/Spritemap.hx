@@ -1,5 +1,8 @@
 package haxepunk.graphics;
 
+import haxepunk.ds.OneOf;
+import haxepunk.assets.AssetCache;
+import haxepunk.math.MathUtil;
 import haxe.ds.Either;
 import haxepunk.HXP;
 import haxepunk.Graphic;
@@ -45,6 +48,10 @@ class Animation
 	{
 		return reverse ? this.frameCount - 1 : 0;
 	}
+}
+
+enum TileTypeHelper {
+	FromAtlasRegion(regionId:String);
 }
 
 /**
@@ -102,13 +109,22 @@ class Spritemap extends Image
 	 * @param	frameWidth		Frame width.
 	 * @param	frameHeight		Frame height.
 	 */
-	public function new(source:TileType, frameWidth:Int = 0, frameHeight:Int = 0)
+	public function new(source:OneOf<TileType, TileTypeHelper>, frameWidth:Int = 0, frameHeight:Int = 0)
 	{
 		_anims = new Map();
 
 		super();
 
-		_atlas = source;
+		_atlas = switch (source) {
+			case Left(tileType):tileType;
+			case Right(v): {
+				switch (v) {
+					case FromAtlasRegion(regionId):
+						var region = AssetCache.global.getAtlasRegion(regionId);
+						TileAtlas.loadFromAtlasRegion(region, frameWidth, frameHeight);
+				}
+			}
+		}
 
 		if (frameWidth > _atlas.width || frameHeight > _atlas.height)
 		{
@@ -348,7 +364,12 @@ class Spritemap extends Image
 	public var frame(default, set):Int = -1;
 	function set_frame(value:Int):Int
 	{
-		value = Std.int(Math.abs(value)) % _atlas.tileCount;
+		if (value < 0) {
+			var mod = MathUtil.iabs(value) % _atlas.tileCount;
+			value = _atlas.tileCount - mod;
+		}
+
+		value = MathUtil.iabs(value) % _atlas.tileCount;
 		if (frame != value)
 		{
 			_region = _atlas.getRegion(value);

@@ -48,7 +48,7 @@ class TileAtlas extends Atlas
 	public function new(source:AtlasDataType, ?tileWidth:Int, ?tileHeight:Int, tileMarginWidth:Int = 0, tileMarginHeight:Int = 0)
 	{
 		super(source);
-		_regions = new Array<AtlasRegion>();
+		_regions = new Array<IAtlasRegion>();
 
 		if (tileWidth != null && tileHeight != null)
 			prepare(tileWidth, tileHeight, tileMarginWidth, tileMarginHeight);
@@ -60,7 +60,7 @@ class TileAtlas extends Atlas
 	 *
 	 * @return	The atlas region object.
 	 */
-	public function getRegion(index:Int):AtlasRegion
+	public function getRegion(index:Int):IAtlasRegion
 	{
 		if (index >= _regions.length)
 		{
@@ -101,9 +101,9 @@ class TileAtlas extends Atlas
 	 *  @param tileMarginHeight		Vertical margin of the tiles
 	 *  @return A TileAtlas with all packed images defined as regions ordered like a normal tileset.
 	 */
-	public static function loadFromAtlasRegion(region:AtlasRegion, tileWidth:Int, tileHeight:Int, tileMarginWidth:Int=0, tileMarginHeight:Int=0):TileAtlas
+	public static function loadFromAtlasRegion(region:IAtlasRegion, tileWidth:Int, tileHeight:Int, tileMarginWidth:Int=0, tileMarginHeight:Int=0):TileAtlas
 	{
-		@:privateAccess var atlas = new TileAtlas(region._parent);
+		var atlas = new TileAtlas(region.parent);
 		atlas._tileWidth = tileWidth;
 		atlas._tileHeight = tileHeight;
 		atlas._tileMarginWidth = tileMarginWidth;
@@ -172,7 +172,7 @@ class TileAtlas extends Atlas
 		}
 	}
 
-	var _regions:Array<AtlasRegion>;
+	var _regions:Array<IAtlasRegion>;
 	var _tileWidth:Int = 0;
 	var _tileHeight:Int = 0;
 	var _tileMarginWidth:Int = 0;

@@ -195,8 +195,10 @@ class World extends Tweener
 				{
 					if (e.shouldUpdate())
 					{
+						e.components.updateLists();
 						e.preUpdate.invoke();
 						e.update();
+						e.components.update();
 						e.postUpdate.invoke();
 					}
 				}
@@ -499,6 +501,7 @@ class World extends Tweener
 	 * @param	e		The Entity to shift.
 	 * @return	If the Entity changed position.
 	 */
+	@:deprecated('bringForward is not implemented')
 	public function bringForward(e:Entity):Bool
 	{
 		if (e._world != this) return false;
@@ -511,6 +514,7 @@ class World extends Tweener
 	 * @param	e		The Entity to shift.
 	 * @return	If the Entity changed position.
 	 */
+	@:deprecated('sendBackward is not implemented')
 	public function sendBackward(e:Entity):Bool
 	{
 		if (e._world != this) return false;
@@ -1162,6 +1166,7 @@ class World extends Tweener
 					continue;
 				e.removed();
 				e.onRemove.invoke();
+				e.components.removedFromWorld();
 				e._world = null;
 				removeUpdate(e);
 				removeRender(e);
@@ -1185,6 +1190,7 @@ class World extends Tweener
 				if (e._name != "") registerName(e);
 				e.added();
 				e.onAdd.invoke();
+				e.components.addedToWorld();
 			}
 			HXP.clear(_add);
 		}

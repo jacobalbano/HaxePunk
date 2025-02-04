@@ -5,6 +5,7 @@ import haxepunk.graphics.shader.Shader;
 import haxepunk.math.Rectangle;
 import haxepunk.math.Vector2;
 import haxepunk.utils.Color;
+import haxe.Exception;
 
 /**
  * This class manages multiple AtlasRegions containing the same image at
@@ -18,6 +19,9 @@ class AtlasResolutions implements IAtlasRegion
 
 	public var height(get, never):Int;
 	inline function get_height() return base.height;
+
+	public var parent(get, never):AtlasData;
+	function get_parent() throw new Exception("AtlasResolutions cannot be used in this way");
 
 	var base:AtlasRegion;
 	var regions:Array<AtlasRegion> = new Array();

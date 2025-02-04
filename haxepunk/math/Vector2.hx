@@ -232,4 +232,8 @@ abstract Vector2(Position) from Position to Position
 	{
 		return new Vector2(this.x, this.y);
 	}
+
+	public inline function isZero():Bool {
+		return this.x == 0 && this.y == 0;
+	}
 }

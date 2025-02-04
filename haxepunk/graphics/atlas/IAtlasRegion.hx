@@ -8,6 +8,7 @@ import haxepunk.utils.Color;
 
 interface IAtlasRegion
 {
+	public var parent(get, never):AtlasData;
 	public var width(get, never):Int;
 	public var height(get, never):Int;
 

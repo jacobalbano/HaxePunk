@@ -5,7 +5,7 @@ package haxepunk;
  * moved together. Also supports object pooling.
  * @since	2.6.0
  */
-class EntityList<T:Entity> extends Entity
+class EntityList<T:Entity = Entity> extends Entity
 {
 	public var entities:Array<T>;
 
@@ -15,11 +15,16 @@ class EntityList<T:Entity> extends Entity
 		return entities.length;
 	}
 
-	public function new()
+	public function new(?initial:Array<T>)
 	{
 		entities = new Array();
 		_recycled = new List();
 		super();
+
+		if (initial != null) {
+			for (e in initial)
+				add(e);
+		}
 	}
 
 	/**

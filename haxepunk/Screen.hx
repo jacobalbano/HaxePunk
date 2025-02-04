@@ -103,6 +103,7 @@ class Screen
 	 * Captures the current screen as an Image object.
 	 * @return	A new Image object.
 	 */
+	@:deprecated('Screen.capture not currently supported')
 	public function capture():Image
 	{
 		throw "Screen.capture not currently supported";
